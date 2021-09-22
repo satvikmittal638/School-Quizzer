@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".activities.Exam">
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Test Question" />
+
+    <RadioGroup
+        android:id="@+id/optionsGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question">
+
+        <RadioButton
+            android:id="@+id/btn_optA"
+            style="@style/radio_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Option A" />
+
+        <RadioButton
+            android:id="@+id/btn_optB"
+            style="@style/radio_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Option B" />
+
+
+        <RadioButton
+            android:id="@+id/btn_optC"
+            style="@style/radio_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="Option C" />
+
+
+        <RadioButton
+            android:id="@+id/btn_optD"
+            style="@style/radio_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Option D" />
+
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_save_nxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="saveAndNext"
+        android:text="@string/hint_save_and_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/optionsGroup" />
+
+    <Button
+        android:id="@+id/btn_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="previous"
+        android:text="@string/hint_previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionsGroup" />
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="submit"
+        android:text="@string/hint_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_prev" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

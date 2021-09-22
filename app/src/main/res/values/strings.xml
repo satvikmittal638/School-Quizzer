@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SchoolQuizzer</string>
+    <string name="hint_rollno">Roll Number</string>
+    <string name="hint_pwd">Password</string>
+    <string name="item_missed">Missed</string>
+    <string name="item_attempted">Attempted</string>
+    <string name="item_upcoming">Upcoming</string>
+    <string name="btn_quiz_start">Start</string>
+    <string name="hint_save_and_next">Save and Next</string>
+    <string name="hint_previous">Previous</string>
+    <string name="hint_submit">Submit</string>
+    <string name="hint_time_left">Time Left</string>
+    <string name="hint_show_questions">Show questions</string>
+    <string name="skip_to_any_question">Skip to any question</string>
+    <string name="hint_time_over">Time Over</string>
+</resources>
