@@ -1,7 +1,5 @@
 package com.example.schoolquizzer.activities;
 
-import static com.example.schoolquizzer.activities.Login.KEY_ROLL;
-import static com.example.schoolquizzer.activities.Login.SHARED_PREFS_CREDENTIALS;
 import static com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter.KEY_QUIZ_DURATION;
 import static com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter.KEY_QUIZ_ID;
 import static com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter.KEY_QUIZ_SUBJECT;
@@ -21,12 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 
 import com.example.schoolquizzer.R;
+import com.example.schoolquizzer.Utility;
 import com.example.schoolquizzer.adapters.QuestionsGridAdapter;
 import com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter;
 import com.example.schoolquizzer.api.ApiController;
 import com.example.schoolquizzer.api.QuizService;
 import com.example.schoolquizzer.api.StudentService;
 import com.example.schoolquizzer.model.Question;
+import com.example.schoolquizzer.model.Student;
 import com.example.schoolquizzer.model.StudentResponse;
 import com.example.schoolquizzer.ui_components.DialogQuestionsGrid;
 
@@ -44,21 +44,21 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
     private RadioGroup optionsGroup;
     private RadioButton btn_optA, btn_optB, btn_optC, btn_optD;
 
+    private Student currentStudent;
     private Bundle quizDetails;
     private List<Question> questionList;
     // Question Id is used as a key here
     private List<StudentResponse> studentResponseList; // to store the answers given by the user
 
 
-    private boolean isCheckedByUser;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
+        currentStudent = Utility.getStudentFromPrefs(this);
         questionList = new ArrayList<>();
         quizDetails = getIntent().getBundleExtra(QuizzesRecyclerAdapter.class.getSimpleName());
+
         QuizService quizService = ApiController.getInstance().getQuizService();
         quizService.getQuestions(quizDetails.getLong(KEY_QUIZ_ID))
                 .enqueue(new Callback<List<Question>>() {
@@ -106,15 +106,19 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
         timerTxtView.setPadding(20, 3, 20, 0);
         startTimer(timerTxtView, (long) quizDetails.getInt(KEY_QUIZ_DURATION) * 60 * 1000);
 
-
-        // Managing the show questions grid
-        MenuItem btn_show_questions = menu.findItem(R.id.btn_show_questions);
-        btn_show_questions.setOnMenuItemClickListener(item -> {
-            DialogQuestionsGrid dialogQuestionsGrid = new DialogQuestionsGrid(questionList.size(), this);// give the listener attached to this class
-            dialogQuestionsGrid.show(getSupportFragmentManager(), "Skip to any question");
-            return true;
-        });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btn_show_questions:
+                DialogQuestionsGrid dialogQuestionsGrid = new DialogQuestionsGrid(questionList.size(), this);// give the listener attached to this class
+                dialogQuestionsGrid.show(getSupportFragmentManager(), "Skip to any question");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void startTimer(TextView onTxtView, long durationInMillis) {
@@ -169,6 +173,7 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
     }
 
     public void submit(View view) {
+        saveSelectedOption();
         submitAnswers();
     }
 
@@ -213,11 +218,13 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
      * Creates a empty list which then just needs to be updated for every answer
      */
     private void makeEmptyAnswerList() {
-        long studentRoll = getSharedPreferences(SHARED_PREFS_CREDENTIALS, MODE_PRIVATE).getLong(KEY_ROLL, 0);
         // No of q = no of answers
         for (int i = 0; i < questionList.size(); i++) {
-            StudentResponse response = new StudentResponse(questionList.get(i).getId(),
-                    studentRoll
+            StudentResponse response = new StudentResponse(
+                    currentStudent.getSchoolClass(),
+                    questionList.get(i).getId(),
+                    quizDetails.getLong(KEY_QUIZ_ID),
+                    currentStudent.getRollNo()
                     , 'N');
             studentResponseList.add(response);
         }
@@ -246,7 +253,6 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
         if (optionSelected != 'N') {
             StudentResponse response = studentResponseList.get(questionNo - 1);
             response.setOptionSelected(optionSelected);
-            Toast.makeText(getApplicationContext(), "Saved option " + optionSelected, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -267,4 +273,6 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
             }
         });
     }
+
+
 }

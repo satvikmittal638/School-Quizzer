@@ -2,6 +2,11 @@
     <string name="app_name">SchoolQuizzer</string>
     <string name="hint_rollno">Roll Number</string>
     <string name="hint_pwd">Password</string>
+    <string name="hint_contact_mail">Write to the administrator</string>
+    <string name="hint_contact_call">Contact administrator</string>
+    <string name="hint_report">Report an issue</string>
+    <string name="hint_rate">Rate Us</string>
+    <string name="hint_logout">Logout</string>
     <string name="item_missed">Missed</string>
     <string name="item_attempted">Attempted</string>
     <string name="item_upcoming">Upcoming</string>

@@ -67,6 +67,7 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
             holder.btn_start.setClickable(false);
         }
 
+
     }
 
     @Override

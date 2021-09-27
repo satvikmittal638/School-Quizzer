@@ -8,10 +8,14 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/banner_login"
-        android:src="@drawable/ic_launcher_background"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_user_blue"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInp_roll"
@@ -19,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_rollno"
-        app:layout_constraintTop_toBottomOf="@id/banner_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/banner_login"
         app:startIconDrawable="@drawable/ic_baseline_rollno_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -40,9 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtInp_roll"
-        app:startIconDrawable="@drawable/ic_baseline_pwd_24"
         app:passwordToggleEnabled="true"
-        >
+        app:startIconDrawable="@drawable/ic_baseline_pwd_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEdit_pwd"
@@ -61,6 +64,14 @@
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInp_pwd" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

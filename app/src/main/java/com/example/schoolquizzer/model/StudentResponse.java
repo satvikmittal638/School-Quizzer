@@ -2,14 +2,15 @@ package com.example.schoolquizzer.model;
 
 public class StudentResponse {
     private long id;
-
-    private long questionId; // same q may have multiple correct answers
+    private int schoolClass;
+    private long questionId,quizId; // same q may have multiple correct answers
     private long studentRoll; // for identification of individual student
     private char optionSelected;
 
-
-    public StudentResponse(long questionId, long studentRoll, char optionSelected) {
+    public StudentResponse(int schoolClass, long questionId, long quizId, long studentRoll, char optionSelected) {
+        this.schoolClass = schoolClass;
         this.questionId = questionId;
+        this.quizId = quizId;
         this.studentRoll = studentRoll;
         this.optionSelected = optionSelected;
     }

@@ -1,11 +1,13 @@
 package com.example.schoolquizzer.activities;
 
-import static com.example.schoolquizzer.activities.Login.KEY_ROLL;
-import static com.example.schoolquizzer.activities.Login.SHARED_PREFS_CREDENTIALS;
+import static com.example.schoolquizzer.activities.Login.SHARED_PREFS_DETAILS;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.schoolquizzer.R;
+import com.example.schoolquizzer.Utility;
 import com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter;
 import com.example.schoolquizzer.api.ApiController;
 import com.example.schoolquizzer.model.Quiz;
@@ -33,12 +36,13 @@ public class HomeScreen extends AppCompatActivity {
     private String quizType = "upcoming"; //  to be sent to the API for getting the quizzes
     private long roll;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS_CREDENTIALS, MODE_PRIVATE);
-        roll = sharedPrefs.getLong(KEY_ROLL, 0);
+        roll = Utility.getStudentFromPrefs(this).getRollNo();
+
         tabLayoutQuizzes = findViewById(R.id.tabLay_quizzes);
         recv_quizzes = findViewById(R.id.recv_quizzes);
         recv_quizzes.setLayoutManager(new LinearLayoutManager(this));
@@ -95,4 +99,24 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_homescreen, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemSelected = item.getItemId();
+        switch (itemSelected){
+            case R.id.item_logout:
+                SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS_DETAILS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                editor.clear(); // cleaning all the student data stored
+                editor.apply();
+                startActivity(new Intent(this, Login.class));
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
