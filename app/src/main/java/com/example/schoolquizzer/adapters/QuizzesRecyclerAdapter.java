@@ -13,29 +13,30 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.schoolquizzer.R;
 import com.example.schoolquizzer.activities.Exam;
+import com.example.schoolquizzer.activities.Result;
 import com.example.schoolquizzer.model.Quiz;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecyclerAdapter.Vholder> {
+    public static final String KEY_QUIZ_ID = "quizId", KEY_QUIZ_DURATION = "quizDuration", KEY_QUIZ_SUBJECT = "quizSubject";
     private final Context context;
+    private String quizType;
     private List<Quiz> quizzes;
-    public static final String KEY_QUIZ_ID="quizId",KEY_QUIZ_DURATION="quizDuration", KEY_QUIZ_SUBJECT = "quizSubject";
 
-    public QuizzesRecyclerAdapter(Context context) {
+    public QuizzesRecyclerAdapter(Context context, String quizType) {
         this.context = context;
+        this.quizType = quizType;
     }
 
     @NonNull
     public QuizzesRecyclerAdapter.Vholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_quiz, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_quiz_item, parent, false);
         return new Vholder(view);
     }
 
@@ -48,6 +49,8 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
         holder.tv_date.setText(quiz.getDateTimeFrom().format(DateTimeFormatter.ISO_LOCAL_DATE));
         holder.tv_from.setText(quiz.getDateTimeFrom().format(DateTimeFormatter.ISO_LOCAL_TIME));
         holder.tv_to.setText(quiz.getDateTimeTo().format(DateTimeFormatter.ISO_LOCAL_TIME));
+
+        // Setting on click listeners
         holder.btn_start.setOnClickListener(v -> {
             Toast.makeText(context, "Quiz started", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, Exam.class);
@@ -58,14 +61,19 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
             intent.putExtra(getClass().getSimpleName(), requiredQuizDetails);
             context.startActivity(intent);
         });
+        holder.btn_show_results.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Result.class);
+            intent.putExtra(KEY_QUIZ_ID, quiz.getId()); // for getting the overall results
+            context.startActivity(intent);
 
-       // TODO improve time condition
-        LocalDateTime now = LocalDateTime.now();
-        // if the current time lies between the start and end time, then let user start the quiz
-        if (!(now.isAfter(quiz.getDateTimeFrom()) && now.isBefore(quiz.getDateTimeTo()))) {
-            // if the time has passed, you can't attempt the quiz
-            holder.btn_start.setClickable(false);
-        }
+        });
+
+
+        // Deciding the visibility of the buttons
+        if (quizType.equals("attempted"))
+            holder.btn_show_results.setVisibility(View.VISIBLE);
+        else if (quizType.equals("live"))
+            holder.btn_start.setVisibility(View.VISIBLE);
 
 
     }
@@ -78,6 +86,7 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
         return 0;
     }
 
+
     public void setQuizzes(List<Quiz> quizzes) {
         this.quizzes = quizzes;
         notifyDataSetChanged();
@@ -85,18 +94,20 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
 
 
     static class Vholder extends RecyclerView.ViewHolder {
-//        CardView card_quiz;
         TextView tv_subject, tv_date, tv_from, tv_to;
-        Button btn_start;
+        Button btn_start, btn_show_results;
 
         public Vholder(@NonNull View itemView) {
             super(itemView);
-//            card_quiz = itemView.findViewById(R.id.card_quiz);
             tv_subject = itemView.findViewById(R.id.tv_subject);
             tv_date = itemView.findViewById(R.id.tv_date);
             tv_from = itemView.findViewById(R.id.tv_from);
             tv_to = itemView.findViewById(R.id.tv_to);
             btn_start = itemView.findViewById(R.id.btn_start);
+            btn_show_results = itemView.findViewById(R.id.btn_show_results);
         }
     }
 }
+
+
+

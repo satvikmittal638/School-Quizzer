@@ -29,6 +29,13 @@
             android:layout_height="wrap_content" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tbitem_live"
+            android:layout_width="wrap_content"
+            android:text="@string/item_live"
+            android:icon="@drawable/ic_baseline_live_24"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tbitem_upcoming"
             android:layout_width="wrap_content"
             android:text="@string/item_upcoming"
@@ -43,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_quiz"
+        tools:listitem="@layout/card_quiz_item"
         app:layout_constraintTop_toBottomOf="@+id/tabLay_quizzes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

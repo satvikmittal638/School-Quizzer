@@ -14,23 +14,28 @@
         android:theme="@style/Theme.SchoolQuizzer"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.Exam"
-            android:exported="true"
-            android:parentActivityName=".activities.HomeScreen"
-            />
-        <activity
-            android:name=".activities.HomeScreen"
-            android:exported="true" />
-        <activity
-            android:name=".activities.Login"
-            android:exported="true"
-            >
+            android:name=".activities.Splashscreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.Result"
+            android:exported="true"
+            android:parentActivityName=".activities.HomeScreen" />
+        <activity
+            android:name=".activities.Exam"
+            android:exported="true"
+            android:parentActivityName=".activities.HomeScreen" />
+        <activity
+            android:name=".activities.HomeScreen"
+            android:exported="true" />
+        <activity
+            android:name=".activities.Login"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -7,15 +7,23 @@
     <string name="hint_report">Report an issue</string>
     <string name="hint_rate">Rate Us</string>
     <string name="hint_logout">Logout</string>
-    <string name="item_missed">Missed</string>
-    <string name="item_attempted">Attempted</string>
-    <string name="item_upcoming">Upcoming</string>
-    <string name="btn_quiz_start">Start</string>
     <string name="hint_save_and_next">Save and Next</string>
     <string name="hint_previous">Previous</string>
     <string name="hint_submit">Submit</string>
     <string name="hint_time_left">Time Left</string>
     <string name="hint_show_questions">Show questions</string>
-    <string name="skip_to_any_question">Skip to any question</string>
     <string name="hint_time_over">Time Over</string>
+    <string name="skip_to_any_question">Skip to any question</string>
+
+    <string name="item_missed">Missed</string>
+    <string name="item_attempted">Attempted</string>
+    <string name="item_live">Live</string>
+    <string name="item_upcoming">Upcoming</string>
+
+    <string name="btn_quiz_start">Start</string>
+    <string name="btn_show_results">Show Results</string>
+
+    <string name="label_num_students">No of students</string>
+    <string name="label_marks">Marks scored</string>
+    <string name="label_leaderboard">Leaderboard</string>
 </resources>

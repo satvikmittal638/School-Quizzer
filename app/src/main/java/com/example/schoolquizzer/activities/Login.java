@@ -2,7 +2,6 @@ package com.example.schoolquizzer.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.schoolquizzer.R;
-import com.example.schoolquizzer.Utility;
 import com.example.schoolquizzer.api.ApiController;
 import com.example.schoolquizzer.api.StudentService;
 import com.example.schoolquizzer.model.Student;
@@ -36,12 +34,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         controller = ApiController.getInstance();
         studentService = controller.getStudentService();
-        // Auto login the user if the credentials are already saved on the device
-        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS_DETAILS, MODE_PRIVATE);
-        Student student = Utility.getStudentFromPrefs(this);
-        if (student != null) {
-            loginUser(student.getRollNo(), student.getPassword());
-        }
+
+
         et_roll = findViewById(R.id.txtEdit_roll);
         et_pwd = findViewById(R.id.txtEdit_pwd);
     }
@@ -54,12 +48,12 @@ public class Login extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+//        switch (item.getItemId()) {
 //            case R.id.item_contact_call:
 //                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "9171817391"));
 //                startActivity(callIntent);
 //                break;
-        }
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -74,19 +68,21 @@ public class Login extends AppCompatActivity {
         studentService.loginStudent(roll, pwd).enqueue(new Callback<Student>() {
             @Override
             public void onResponse(@NonNull Call<Student> call, @NonNull Response<Student> response) {
+
                 Student student = response.body();
                 if (student != null) { // if details are correct
-                    student.setPassword(pwd); // not returned by the API
-                    saveStudentDetails(student); // saving all the student details(including the password)
+//                    student.setPassword(pwd); // not returned by the API
+                    saveStudentDetails(student); // saving all the student details(excluding the password)
                     Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Login.this, HomeScreen.class));
                     finish();
                 }
+
             }
 
             @Override
             public void onFailure(@NonNull Call<Student> call, @NonNull Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
         });
 

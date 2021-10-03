@@ -2,10 +2,10 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_quiz"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:id="@+id/card_quiz"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="30dp"
     android:elevation="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,10 +65,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_quiz_start"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_from" />
+
+        <Button
+            android:id="@+id/btn_show_results"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_show_results"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_start"
+            app:layout_constraintEnd_toEndOf="@+id/btn_start"
+            app:layout_constraintStart_toStartOf="@+id/btn_start"
+            app:layout_constraintTop_toTopOf="@+id/btn_start" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
