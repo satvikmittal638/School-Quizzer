@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.Result">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tv_barXlabel"
+            style="@style/tvDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_marks"
+            app:layout_constraintEnd_toEndOf="@+id/barchart_marks_frequency"
+            app:layout_constraintStart_toStartOf="@+id/barchart_marks_frequency"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barchart_marks_frequency"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_barXlabel" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_head_leaderboard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barchart_marks_frequency"
+            app:layout_constraintTop_toTopOf="@+id/tv_head_leaderboard"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_winning_leaderboard" />
+
+        <TextView
+            android:id="@+id/tv_head_leaderboard"
+            style="@style/tvDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/label_leaderboard"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/animation_view"
+            app:layout_constraintTop_toBottomOf="@+id/barchart_marks_frequency" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recv_leaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_head_leaderboard"
+            app:layout_constraintStart_toStartOf="@+id/tv_head_leaderboard"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head_leaderboard"
+            tools:listitem="@layout/card_leaderboard_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
