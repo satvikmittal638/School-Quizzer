@@ -26,7 +26,7 @@ import java.util.List;
 public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecyclerAdapter.Vholder> {
     public static final String KEY_QUIZ_ID = "quizId", KEY_QUIZ_DURATION = "quizDuration", KEY_QUIZ_SUBJECT = "quizSubject";
     private final Context context;
-    private String quizType;
+    private final String quizType;
     private List<Quiz> quizzes;
 
     public QuizzesRecyclerAdapter(Context context, String quizType) {
@@ -40,7 +40,7 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
         return new Vholder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.O) // for LocalDateTime package use
     @Override
     public void onBindViewHolder(@NonNull QuizzesRecyclerAdapter.Vholder holder, int position) {
         Quiz quiz = quizzes.get(position);
@@ -50,7 +50,7 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
         holder.tv_from.setText(quiz.getDateTimeFrom().format(DateTimeFormatter.ISO_LOCAL_TIME));
         holder.tv_to.setText(quiz.getDateTimeTo().format(DateTimeFormatter.ISO_LOCAL_TIME));
 
-        // Setting on click listeners
+        // Setting up OnClick listeners
         holder.btn_start.setOnClickListener(v -> {
             Toast.makeText(context, "Quiz started", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, Exam.class);
@@ -69,7 +69,7 @@ public class QuizzesRecyclerAdapter extends RecyclerView.Adapter<QuizzesRecycler
         });
 
 
-        // Deciding the visibility of the buttons
+        // Deciding the visibility of the start and show results button
         if (quizType.equals("attempted"))
             holder.btn_show_results.setVisibility(View.VISIBLE);
         else if (quizType.equals("live"))

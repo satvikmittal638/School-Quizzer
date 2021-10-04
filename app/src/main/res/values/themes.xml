@@ -23,7 +23,14 @@
         <item name="helperTextEnabled">true</item>
         <item name="helperText">*Required</item>
         <item name="helperTextTextColor">@color/red</item>
+        <item name="boxCornerRadiusTopStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
     </style>
+
+    <style name="loginEditTextLayout" parent="Widget.AppCompat.EditText">
+        <item name="hintAnimationEnabled">true</item>
+    </style>
+
 
     <style name="tvDetails" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">20sp</item>

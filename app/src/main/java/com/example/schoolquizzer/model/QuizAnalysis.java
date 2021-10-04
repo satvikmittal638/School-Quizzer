@@ -1,8 +1,8 @@
 package com.example.schoolquizzer.model;
 
 import java.util.List;
-import java.util.Map;
 
+// Not a entity stores in the database , only a JSON response dynamically generated
 public class QuizAnalysis {
     private float classMarksAvg;
     private List<Student> leaderBoard;

@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +19,7 @@ import com.example.schoolquizzer.Utility;
 import com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter;
 import com.example.schoolquizzer.api.ApiController;
 import com.example.schoolquizzer.model.Quiz;
+import com.example.schoolquizzer.model.Student;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -41,7 +42,10 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        roll = Utility.getStudentFromPrefs(this).getRollNo();
+        Student student = Utility.getStudentFromPrefs(this);
+        if (student != null)
+            roll = student.getRollNo();
+
 
         tabLayoutQuizzes = findViewById(R.id.tabLay_quizzes);
         recv_quizzes = findViewById(R.id.recv_quizzes);
@@ -49,7 +53,7 @@ public class HomeScreen extends AppCompatActivity {
         recv_quizzes.setHasFixedSize(false);
 
 
-        // Fetching the quizzes
+        // Fetching the quizzes and handling tab clicks
         ApiController.getInstance().getQuizService()
                 .getQuizzes(roll)
                 .enqueue(new Callback<Map<String, List<Quiz>>>() {
@@ -57,12 +61,12 @@ public class HomeScreen extends AppCompatActivity {
                     public void onResponse(@NonNull Call<Map<String, List<Quiz>>> call, @NonNull Response<Map<String, List<Quiz>>> response) {
 
                         if (response.body() != null) {
-                            Toast.makeText(getApplicationContext(), "Quizzes fetched", Toast.LENGTH_SHORT).show();
-
+                            // TODO Stop progress bar
 
                             tabLayoutQuizzes.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                                 @Override
                                 public void onTabSelected(TabLayout.Tab tab) {
+                                    // Incorporating all quizzes in one recyclerview only
                                     switch (tab.getPosition()) {
                                         case 0:
                                             quizType = "missed";
@@ -84,11 +88,12 @@ public class HomeScreen extends AppCompatActivity {
 
                                 @Override
                                 public void onTabUnselected(TabLayout.Tab tab) {
-
+                                    // Do nothing
                                 }
 
                                 @Override
                                 public void onTabReselected(TabLayout.Tab tab) {
+                                    // Do nothing
 
                                 }
                             });
@@ -115,12 +120,22 @@ public class HomeScreen extends AppCompatActivity {
         int itemSelected = item.getItemId();
         switch (itemSelected) {
             case R.id.item_logout:
-                SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS_DETAILS, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPrefs.edit();
-                editor.clear(); // cleaning all the student data stored
-                editor.apply();
-                startActivity(new Intent(this, Login.class));
-                finish();
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                dialogBuilder.setMessage(R.string.warn_logout);
+                dialogBuilder.setTitle(R.string.warnHead_logout);
+                dialogBuilder.setPositiveButton(R.string.yes, (dialog, which) -> {
+                    SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS_DETAILS, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPrefs.edit();
+                    editor.clear(); // cleaning all the student data stored
+                    editor.apply();
+                    startActivity(new Intent(this, Login.class));
+                    finish();
+                });
+                dialogBuilder.setNegativeButton(R.string.no, null); // do nothing
+
+                dialogBuilder.create().show();
+
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,10 +1,11 @@
 package com.example.schoolquizzer.model;
 
+// For analysis of individual student
 public class QuizzesStudent {
 
     private int sno;
 
-    private long quizId,studentRoll; // multiple quiz-student relations might exist
+    private long quizId, studentRoll; // multiple quiz-student relations might exist
 
     private String type;
 

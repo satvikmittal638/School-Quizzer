@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login_screen"
     tools:context=".activities.Login">
 
 
@@ -30,6 +31,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEdit_roll"
+            style="@style/loginEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number" />
@@ -49,6 +51,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEdit_pwd"
+            style="@style/loginEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword" />
@@ -59,9 +62,12 @@
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:foregroundTint="@color/black"
         android:onClick="login"
-        android:text="Login"
+        android:paddingHorizontal="20dp"
+        android:text="@string/btnhint_login"
+        android:textSize="20sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

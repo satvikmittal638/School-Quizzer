@@ -4,7 +4,7 @@ public class Student {
     private long rollNo;
     private int schoolClass;
     private char schoolSection;
-    private String name,password;
+    private String name, password;
 
     public Student(long rollNo, int schoolClass, String name, String password) {
         this.rollNo = rollNo;

@@ -1,7 +1,5 @@
 package com.example.schoolquizzer.api;
 
-import com.example.schoolquizzer.model.Quiz;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,24 +8,25 @@ public class ApiController {
     private static ApiController controller;
     private static Retrofit retrofit;
 
-    private ApiController(){
+    private ApiController() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    public static synchronized ApiController getInstance(){
-        if(controller==null){
+    public static synchronized ApiController getInstance() {
+        if (controller == null) {
             controller = new ApiController();
         }
         return controller;
     }
 
-    public StudentService getStudentService(){
+    public StudentService getStudentService() {
         return retrofit.create(StudentService.class);
     }
-    public QuizService getQuizService(){
+
+    public QuizService getQuizService() {
         return retrofit.create(QuizService.class);
     }
 }

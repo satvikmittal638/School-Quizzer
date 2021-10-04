@@ -26,4 +26,19 @@
     <string name="label_num_students">No of students</string>
     <string name="label_marks">Marks scored</string>
     <string name="label_leaderboard">Leaderboard</string>
+    <string name="btnhint_login">Login</string>
+
+
+    <string name="warnHead_logout">Logout</string>
+    <string name="warn_logout">Are you sure that you want to logout</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!--    Some predefined details-->
+    <string name="administrator_number">1234567890</string>
+    <string name="administrator_mail">company@mail.com</string>
+    <string name="contactSubject">Regarding</string>
+    <string name="reportSubject">Reporting an issue relating to</string>
+
+
 </resources>

@@ -1,9 +1,10 @@
 package com.example.schoolquizzer.model;
 
+// For submission as well as question-wise analysis of the quiz
 public class StudentResponse {
     private long id;
     private int schoolClass;
-    private long questionId,quizId; // same q may have multiple correct answers
+    private long questionId, quizId; // same q may have multiple correct answers
     private long studentRoll; // for identification of individual student
     private char optionSelected;
 

@@ -37,10 +37,6 @@ public class Result extends AppCompatActivity {
     private long quizId;
     private Student student;
 
-    private BarChart barMarksFreq;
-    private RecyclerView recv_leaderboard;
-    private LeaderboardAdapter leaderboardAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +51,25 @@ public class Result extends AppCompatActivity {
         quizService.getQuizDetails(quizId)
                 .enqueue(new Callback<Quiz>() {
                     @Override
-                    public void onResponse(Call<Quiz> call, Response<Quiz> response) {
+                    public void onResponse(@NonNull Call<Quiz> call, @NonNull Response<Quiz> response) {
                         Quiz quiz = response.body();
-                        String title = String.format(Locale.ENGLISH, "%s (%d)", quiz.getSubject(), quiz.getMaxMarks());
-                        getSupportActionBar().setTitle(title);
+                        if (quiz != null) {
+                            String title = String.format(Locale.ENGLISH, "%s (%d)", quiz.getSubject(), quiz.getMaxMarks());
+                            if (getSupportActionBar() != null)
+                                getSupportActionBar().setTitle(title);
+
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<Quiz> call, Throwable t) {
-
+                    public void onFailure(@NonNull Call<Quiz> call, @NonNull Throwable t) {
+                        // TODO notify user of any failures
                     }
                 });
 
 
         // Getting the student's result in the form of QuizStudent relation
+        // TODO prepare the student result with question-wise analysis
         quizService.getResult(quizId, student.getRollNo())
                 .enqueue(new Callback<QuizzesStudent>() {
                     @Override
@@ -89,31 +90,41 @@ public class Result extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<QuizAnalysis> call, @NonNull Response<QuizAnalysis> response) {
                         QuizAnalysis analysis = response.body();
-                        plotBarGraph(analysis.getMarksFrequencyTable());
-                        manageLeaderBoard(analysis.getLeaderBoard());
+                        if (analysis != null) {
+                            plotBarGraph(analysis.getMarksFrequencyTable());
+                            manageLeaderBoard(analysis.getLeaderBoard());
+                        }
 
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<QuizAnalysis> call, @NonNull Throwable t) {
-
+                        // TODO notify user
                     }
                 });
 
 
     }
 
+    /**
+     * Populates the recyclerview to look like a leaderboard
+     *
+     * @param leaderBoard List of top students in the leaderboard
+     */
     private void manageLeaderBoard(List<Student> leaderBoard) {
         // Managing the leaderboard
-        recv_leaderboard = findViewById(R.id.recv_leaderboard);
+        RecyclerView recv_leaderboard = findViewById(R.id.recv_leaderboard);
         recv_leaderboard.setHasFixedSize(false);
         recv_leaderboard.setLayoutManager(new LinearLayoutManager(Result.this));
-        leaderboardAdapter = new LeaderboardAdapter(Result.this, leaderBoard);
+        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(Result.this, leaderBoard);
         recv_leaderboard.setAdapter(leaderboardAdapter);
     }
 
+    /**
+     * Plots the bar graph on the bar chart for the given frequency distribution
+     */
     private void plotBarGraph(long[][] frequencyTable) {
-        barMarksFreq = findViewById(R.id.barchart_marks_frequency);
+        BarChart barMarksFreq = findViewById(R.id.barchart_marks_frequency);
 
         List<BarEntry> info = new ArrayList<>();
         for (long[] record : frequencyTable)

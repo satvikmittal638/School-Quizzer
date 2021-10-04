@@ -10,47 +10,52 @@
         android:id="@+id/tabLay_quizzes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/green"
+        app:tabRippleColor="@color/teal_200">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tbitem_missed"
-            android:icon="@drawable/ic_baseline_missed_24"
             android:layout_width="wrap_content"
-            android:text="@string/item_missed"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_missed_24"
+            android:text="@string/item_missed" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tbitem_attempted"
             android:layout_width="wrap_content"
-            android:text="@string/item_attempted"
+            android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_attempted_24"
-            android:layout_height="wrap_content" />
+            android:text="@string/item_attempted" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tbitem_live"
             android:layout_width="wrap_content"
-            android:text="@string/item_live"
+            android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_live_24"
-            android:layout_height="wrap_content" />
+            android:text="@string/item_live" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tbitem_upcoming"
             android:layout_width="wrap_content"
-            android:text="@string/item_upcoming"
+            android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_upcoming_24"
-            android:layout_height="wrap_content" />
+            android:text="@string/item_upcoming" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recv_quizzes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/recv_quizzes"
+        android:hapticFeedbackEnabled="true"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/card_quiz_item"
-        app:layout_constraintTop_toBottomOf="@+id/tabLay_quizzes" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLay_quizzes"
+        tools:listitem="@layout/card_quiz_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,11 +2,9 @@ package com.example.schoolquizzer.ui_components;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,20 +16,18 @@ import com.example.schoolquizzer.R;
 import com.example.schoolquizzer.adapters.QuestionsGridAdapter;
 
 public class DialogQuestionsGrid extends DialogFragment {
-    private RecyclerView recv_grid;
-    private QuestionsGridAdapter adapter;
-    private int noOfQuestions;
+    private final int noOfQuestions;
 
     // Supplied to Recycler View adapter
-    private QuestionsGridAdapter.OnCardClick mCallBack;
+    private final QuestionsGridAdapter.OnCardClick mCallBack;
+
+    private RecyclerView recv_grid;
+    private QuestionsGridAdapter adapter;
 
     public DialogQuestionsGrid(int noOfQuestions, QuestionsGridAdapter.OnCardClick listener) {
         this.noOfQuestions = noOfQuestions;
         mCallBack = listener;
     }
-
-
-
 
 
     @NonNull

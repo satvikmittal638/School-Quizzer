@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.viewHolder> {
     private final Context context;
-    private List<Student> students;
+    private final List<Student> students;
 
     public LeaderboardAdapter(Context context, List<Student> students) {
         this.context = context;
@@ -34,10 +34,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     @Override
     public void onBindViewHolder(@NonNull LeaderboardAdapter.viewHolder holder, int position) {
         Student student = students.get(position);
-        holder.tv_position.setText(String.valueOf(position + 1)); // index starts from 0
-
-        holder.tv_name.setText(student.getName());
         String classAndSection = String.format(Locale.ENGLISH, "%s-%s", student.getSchoolClass(), student.getSchoolSection());
+
+
+        holder.tv_position.setText(String.valueOf(position + 1)); // index starts from 0
+        holder.tv_name.setText(student.getName());
         holder.tv_classAndSection.setText(classAndSection);
     }
 

@@ -16,11 +16,12 @@ public class Splashscreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+
         // Auto login the user if the credentials are already saved on the device
         Student student = Utility.getStudentFromPrefs(this);
         if (student != null) {
             startActivity(new Intent(this, HomeScreen.class));
-        }else{
+        } else {
             startActivity(new Intent(this, Login.class));
         }
         finish();

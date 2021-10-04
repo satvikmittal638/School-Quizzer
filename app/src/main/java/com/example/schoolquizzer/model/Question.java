@@ -3,7 +3,6 @@ package com.example.schoolquizzer.model;
 public class Question {
     private long id;
 
-
     private long quizId;
 
     private String question;
@@ -12,7 +11,7 @@ public class Question {
     private String option3;
     private String option4;
 
-    private char correctOption; // ranges from A-B
+    private char correctOption; // ranges from A-D
 
     public Question(long id, long quizId, String question, String option1, String option2, String option3, String option4, char correctOption) {
         this.id = id;

@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:elevation="40dp"
-    android:padding="10dp"
     android:layout_marginTop="15dp"
-    >
+    android:elevation="40dp"
+    android:padding="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_card_leaderboard_item"
-        >
+        android:background="@drawable/bg_card_leaderboard_item">
 
         <TextView
             android:id="@+id/tv_position"
