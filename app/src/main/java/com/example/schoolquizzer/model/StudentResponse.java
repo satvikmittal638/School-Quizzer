@@ -7,13 +7,16 @@ public class StudentResponse {
     private long questionId, quizId; // same q may have multiple correct answers
     private long studentRoll; // for identification of individual student
     private char optionSelected;
+    private int timeTakenInSec;
 
-    public StudentResponse(int schoolClass, long questionId, long quizId, long studentRoll, char optionSelected) {
+
+    public StudentResponse(int schoolClass, long questionId, long quizId, long studentRoll, char optionSelected, int timeTakenInSec) {
         this.schoolClass = schoolClass;
         this.questionId = questionId;
         this.quizId = quizId;
         this.studentRoll = studentRoll;
         this.optionSelected = optionSelected;
+        this.timeTakenInSec = timeTakenInSec;
     }
 
     public StudentResponse() {
@@ -49,5 +52,29 @@ public class StudentResponse {
 
     public void setOptionSelected(char optionSelected) {
         this.optionSelected = optionSelected;
+    }
+
+    public int getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(int schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+
+    public long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(long quizId) {
+        this.quizId = quizId;
+    }
+
+    public int getTimeTakenInSec() {
+        return timeTakenInSec;
+    }
+
+    public void setTimeTakenInSec(int timeTakenInSec) {
+        this.timeTakenInSec = timeTakenInSec;
     }
 }

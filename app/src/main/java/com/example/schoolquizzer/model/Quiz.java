@@ -8,7 +8,12 @@ import java.time.LocalDateTime;
 
 public class Quiz {
     private long id;
+    // Teachers assignment details
+    private long assignedBy;
+    private LocalDateTime assignedOn; // auto populated
 
+    // Examination Details
+    private String quizName;
     private String subject;
 
     private String dateTimeFrom;
@@ -21,9 +26,11 @@ public class Quiz {
 
     private int maxMarks;
 
-    @RequiresApi(api = Build.VERSION_CODES.O) // For use of LocalDateTime package
-    public Quiz(long id, String subject, String dateTimeFrom, String dateTimeTo, int durationInMin, String instructions, int maxMarks) {
+    public Quiz(long id, long assignedBy, LocalDateTime assignedOn, String quizName, String subject, String dateTimeFrom, String dateTimeTo, int durationInMin, String instructions, int maxMarks) {
         this.id = id;
+        this.assignedBy = assignedBy;
+        this.assignedOn = assignedOn;
+        this.quizName = quizName;
         this.subject = subject;
         this.dateTimeFrom = dateTimeFrom;
         this.dateTimeTo = dateTimeTo;
@@ -31,6 +38,8 @@ public class Quiz {
         this.instructions = instructions;
         this.maxMarks = maxMarks;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O) // For use of LocalDateTime package
 
     public Quiz() {
     }
@@ -43,6 +52,29 @@ public class Quiz {
         this.id = id;
     }
 
+    public long getAssignedBy() {
+        return assignedBy;
+    }
+
+    public void setAssignedBy(long assignedBy) {
+        this.assignedBy = assignedBy;
+    }
+
+    public LocalDateTime getAssignedOn() {
+        return assignedOn;
+    }
+
+    public void setAssignedOn(LocalDateTime assignedOn) {
+        this.assignedOn = assignedOn;
+    }
+
+    public String getQuizName() {
+        return quizName;
+    }
+
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
+    }
 
     public String getSubject() {
         return subject;

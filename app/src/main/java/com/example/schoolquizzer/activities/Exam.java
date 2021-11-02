@@ -6,6 +6,7 @@ import static com.example.schoolquizzer.adapters.QuizzesRecyclerAdapter.KEY_QUIZ
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,8 +39,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// TODO record time spent on each question
 public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCardClick {
     private int questionNo = 1;
+    private int timeSpentInQ = 0; // incremented by the timer
     private TextView tv_question;
     private RadioGroup optionsGroup;
     private RadioButton btn_optA, btn_optB, btn_optC, btn_optD;
@@ -131,6 +134,8 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
                 long sec = timeInSec - min * 60; // subtracting the exact sec from total time(in sec) and getting the remaining seconds
                 String timeToShow = String.format(Locale.ENGLISH, "%d : %d", min, sec);
                 onTxtView.setText(timeToShow);
+
+                timeSpentInQ++; // incremented every sec
             }
 
             @Override
@@ -154,7 +159,7 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
     public void saveAndNext(View view) {
         saveSelectedOption();
 
-        if (questionNo < questionList.size()) // if the q is before the last q
+        if (questionNo < questionList.size()) // if the q is before or equal to the last q
         {
             questionNo++;
             updateQuestionUI();
@@ -225,13 +230,13 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
                     questionList.get(i).getId(),
                     quizDetails.getLong(KEY_QUIZ_ID),
                     currentStudent.getRollNo()
-                    , 'N');
+                    , 'N', 0);
             studentResponseList.add(response);
         }
     }
 
     /**
-     * Saves the currently selected option the response list otherwise does nothing
+     * Saves the currently selected option in the response list otherwise does nothing
      */
     private void saveSelectedOption() {
         char optionSelected = 'N'; // nothing selected by default
@@ -253,6 +258,10 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
         if (optionSelected != 'N') {
             StudentResponse response = studentResponseList.get(questionNo - 1);
             response.setOptionSelected(optionSelected);
+            response.setTimeTakenInSec(response.getTimeTakenInSec() + timeSpentInQ); // adding the time to the previously spent time
+            timeSpentInQ=0; // resetting for reuse
+
+            Log.d("timeSaved", "Time taken is: "+response.getTimeTakenInSec());
         }
     }
 
@@ -263,7 +272,7 @@ public class Exam extends AppCompatActivity implements QuestionsGridAdapter.OnCa
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Test submitted successfully", Toast.LENGTH_SHORT).show();
-                    onBackPressed(); // throws back to the home screen
+                    onBackPressed(); // throws back the user to the home screen
                 }
             }
 
